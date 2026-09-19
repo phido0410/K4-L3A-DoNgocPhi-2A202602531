@@ -1,7 +1,7 @@
 # Báo Cáo Cá Nhân — Lab 7: Embedding & Vector Store
 
 **Họ tên:** Đỗ Ngọc Phi — MSSV 2A202602531
-**Nhóm:** 4ae (vai trò: R1 · Data; chiến lược: `SentenceChunker`)
+**Nhóm:** 4ae (vai trò: trưởng nhóm, R1 · Data; chiến lược: `SentenceChunker`)
 **Ngày:** 19/09/2026
 
 > **Nộp 1 bản / sinh viên.** Phần nhóm (lựa chọn tài liệu, thiết kế chiến lược, bộ câu hỏi đánh giá, demo) nộp chung 1 bản trong `REPORT_NHOM.md`. Chi tiết thang điểm: `docs/SCORING.md`.
@@ -174,7 +174,7 @@ Chạy **5 câu hỏi đánh giá của nhóm** trên mã nguồn cá nhân củ
 **Bao nhiêu câu hỏi trả về chunk có liên quan trong top-3?** 4 / 5 (Q4 không có). Điểm theo rubric `SCORING.md`: **6/10**. Nếu chỉ chấm theo `doc_id` thì là 5/5, nhưng con số đó thổi phồng kết quả.
 
 **Điều hay nhất tôi học được từ thành viên khác / nhóm khác (qua demo):**
-> Từ Đỗ Đức Đại: chunker theo Điều **gắn tiêu đề Điều vào từng mảnh**, nên phân biệt được Điều 21 (tự luận) và Điều 24 (tiểu luận), đúng chỗ chiến lược Sentence của tôi thất bại ở Q4. Từ Phạm Cường Quốc: chấm theo **đủ các ý chính** thay vì chỉ một chuỗi, vì một chuỗi như "14 ngày làm việc" có thể khớp nhầm vào đoạn nói về nộp muộn. Bài học từ vai trò Data của tôi: chất lượng corpus quyết định mọi thứ phía sau. Tách quy chế theo `audience` mới giúp filter có việc thật để làm, còn một dòng ghi nguồn để nhầm trong nội dung đã đủ làm hỏng kết quả của chiến lược Heading.
+> Từ Đỗ Đức Đại: chunker theo Điều **gắn tiêu đề Điều vào từng mảnh**, nên phân biệt được Điều 21 (tự luận) và Điều 24 (tiểu luận), đúng chỗ chiến lược Sentence của tôi thất bại ở Q4. Từ Phạm Cường Quốc: chấm theo **đủ các ý chính** thay vì chỉ một chuỗi, vì một chuỗi như "14 ngày làm việc" có thể khớp nhầm vào đoạn nói về nộp muộn. Bài học từ vai trò Data của tôi: chất lượng corpus quyết định mọi thứ phía sau. Tách quy chế theo `audience` mới giúp filter có việc thật để làm, còn một dòng ghi nguồn để nhầm trong nội dung đã đủ làm hỏng kết quả của chiến lược Heading. Khi điều phối nhóm, tôi thấy số liệu tổng hợp chỉ đáng tin khi mọi người chạy cùng cấu hình và chỉ khác đúng một dòng `CHUNKER`.
 
 ---
 

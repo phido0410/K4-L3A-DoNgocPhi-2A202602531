@@ -12,14 +12,14 @@
 
 ### Phân công vai trò
 
-Nhóm 4 người theo lab: ba vai R1–R3 cộng thêm **Report & Demo Lead**. Vai là trách nhiệm điều phối cộng thêm; cả 4 người đều tự code `src/`, tự chạy benchmark với chiến lược riêng và không ai trùng chiến lược.
+Nhóm 4 người theo lab: ba vai R1–R3 cộng thêm vai **Report & Demo**. **Trưởng nhóm: Đỗ Ngọc Phi** (kiêm R1 · Data). Vai là trách nhiệm điều phối cộng thêm; cả 4 người đều tự code `src/`, tự chạy benchmark với chiến lược riêng và không ai trùng chiến lược.
 
 | Thành viên | MSSV | Vai | Chiến lược chunking | Việc điều phối chính |
 |---|---|---|---|---|
-| Đỗ Ngọc Phi | 2A202602531 | R1 · Data | Sentence (3 câu/chunk) | Chốt chủ đề và nguồn (IUH), kiểm `robots.txt`, crawl và làm sạch trang HTML, chép và tách 9 Điều từ PDF theo `audience`, giữ `sources.csv`, chạy script kiểm tra CP2 |
+| Đỗ Ngọc Phi | 2A202602531 | **Trưởng nhóm** · R1 · Data | Sentence (3 câu/chunk) | Điều phối nhóm. Chốt chủ đề và nguồn (IUH), kiểm `robots.txt`, crawl và làm sạch trang HTML, chép và tách 9 Điều từ PDF theo `audience`, giữ `sources.csv`, chạy script kiểm tra CP2. Gom kết quả 4 thành viên, chấm lại theo 3 mức, dẫn phần phân tích lỗi (tìm ra lỗi dòng ghi nguồn của Heading v1 và câu thăm dò filter) |
 | Phạm Cường Quốc | 2A202602469 | R2 · Benchmark | Recursive (500) | Viết 5 câu hỏi kèm gold answer, kiểm từng ý chính có trong tài liệu gold và không trùng tài liệu khác, thiết kế câu hỏi cần filter `audience=student` |
 | Đỗ Đức Đại | 2A202602725 | R3 · Strategy | HeadingChunker (custom, v1 → v2) | Bảo đảm không trùng chiến lược, chạy baseline `ChunkingStrategyComparator`, viết chunker theo Điều |
-| Nguyễn Trường Bảo | 2A202602540 | Report & Demo Lead | FixedSize (500, overlap 100) | Gom kết quả 4 thành viên, chấm lại theo 3 mức, dẫn phần phân tích lỗi (tìm ra lỗi dòng ghi nguồn của Heading v1 và câu thăm dò filter), viết báo cáo nhóm, dẫn demo |
+| Nguyễn Trường Bảo | 2A202602540 | Report & Demo | FixedSize (500, overlap 100) | Viết báo cáo nhóm từ kết quả đã tổng hợp, chuẩn bị và dẫn phần demo |
 
 ---
 
@@ -104,7 +104,7 @@ Chạy `ChunkingStrategyComparator().compare(body, chunk_size=500)` trên 3 tài
 
 ### Chiến lược của từng thành viên
 
-**Thành viên 1 — Nguyễn Trường Bảo (Report & Demo Lead)**
+**Thành viên 1 — Nguyễn Trường Bảo (Report & Demo)**
 - **Loại chiến lược:** FixedSize, `FixedSizeChunker(chunk_size=500, overlap=100)`, tạo 107 chunk.
 - **Mô tả & lý do chọn cho chủ đề này:** Làm mốc so sánh đơn giản, dễ tái lập. Overlap 100 ký tự (20%) để một con số hay thời hạn nằm ngay ranh giới vẫn xuất hiện trọn trong ít nhất một chunk.
 - **Code snippet (nếu custom):** không (dùng chunker có sẵn).
@@ -154,7 +154,7 @@ class HeadingChunker:
         return [f"{heading}\n{piece}" for piece in RecursiveChunker(chunk_size=inner_size).chunk(body)]
 ```
 
-**Thành viên 4 — Đỗ Ngọc Phi (R1 · Data)**
+**Thành viên 4 — Đỗ Ngọc Phi (Trưởng nhóm · R1 · Data)**
 - **Loại chiến lược:** Sentence, `SentenceChunker(max_sentences_per_chunk=3)`, tạo 116 chunk.
 - **Mô tả & lý do chọn:** Là chiến lược có sẵn duy nhất còn trống, và dùng để kiểm một giả thuyết riêng: quy định thường được viết thành những câu dài hoàn chỉnh (điều kiện, hậu quả, danh sách ngăn bằng dấu `;`), nên giữ trọn câu có thể giữ trọn ý. Điểm yếu đã biết từ baseline: chunker coi "1.", "2.", "Điều 26." là hết câu, và không giới hạn độ dài (chunk dài nhất 927 ký tự).
 - **Code snippet (nếu custom):** không (dùng chunker có sẵn).
