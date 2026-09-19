@@ -1,0 +1,56 @@
+=== Benchmark config ===
+data_dir   : data/khao-thi-phuc-khao  (10 files)
+chunker    : RecursiveChunker {'separators': ['\n\n', '\n', '. ', ' ', ''], 'chunk_size': 500}
+embedder   : sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+llm        : extractive (no LLM_PROVIDER/LLM_MODEL set)
+chunks     : 118  (avg 353 chars, min 26, max 499)
+
+--- Q1: Tôi muốn phúc khảo bài thi tự luận thì phải làm gì và trong thời hạn bao lâu?
+    gold=phuc-khao-nguoi-hoc  must_contain=['làm đơn phúc khảo', 'giáo vụ Khoa/Viện', 'trong vòng 14 ngày làm việc']  filter={'audience': 'student'}
+    1. score=0.570  id=phuc-khao-nguoi-hoc#1  | 1. Sau khi điểm số được công bố trên hệ thống của Nhà trường, người học dự thi làm đơn phúc khảo điểm thi (Mẫu
+    2. score=0.544  id=phuc-khao-nguoi-hoc#2  | c) Đơn vị chủ quản học phần có trách nhiệm thông báo kết quả phúc khảo tới người học dự thi trong vòng 07 ngày
+    3. score=0.531  id=nguoi-hoc-du-thi#2  | 2. Phải mang theo thẻ sinh viên, thẻ học viên hoặc giấy tờ tùy thân có thông tin cá nhân, dán ảnh và đóng dấu 
+    -> doc-level hit: True | key facts: 3/3 | points: 2/2
+    [A/B] same query WITHOUT metadata_filter:
+    1. score=0.638  id=bien-soan-de-thi#17  | b) Các quy định về việc làm tiểu luận, đồ án như: thời gian, các yêu cầu về định dạng, độ dài, hình thức trình
+    2. score=0.602  id=hinh-thuc-thoi-luong-thi#7  | e) Đối với thi vấn đáp, thời lượng thi được tính theo công thức: Thời lượng thi = [(số người học x 15 phút)/số
+    3. score=0.590  id=hinh-thuc-thoi-luong-thi#6  | c) Các học phần tổ chức thi tại phòng máy vi tính, thời gian làm bài thi tối thiểu là 50 phút và tối đa là 150
+    -> points without filter: 0/2
+    agent: [extractive] 1. Sau khi điểm số được công bố trên hệ thống của Nhà trường, người học dự thi làm đơn phúc khảo điểm thi (Mẫu 12) và chuyển đơn phúc khảo, phiếu đóng tiền phúc khảo đến giáo vụ Khoa/Viện của đơn vị chủ quản học phần trong vòng 14 ngày làm việc, kể từ ngày điểm thi được công bố. Nếu ngư
+
+--- Q2: Thời lượng tối đa của một bài thi tự luận là bao nhiêu phút?
+    gold=hinh-thuc-thoi-luong-thi  must_contain=['tối đa là 120 phút']  filter=None
+    1. score=0.886  id=hinh-thuc-thoi-luong-thi#7  | e) Đối với thi vấn đáp, thời lượng thi được tính theo công thức: Thời lượng thi = [(số người học x 15 phút)/số
+    2. score=0.886  id=hinh-thuc-thoi-luong-thi#6  | c) Các học phần tổ chức thi tại phòng máy vi tính, thời gian làm bài thi tối thiểu là 50 phút và tối đa là 150
+    3. score=0.744  id=hinh-thuc-thoi-luong-thi#8  | f) Đối với hình thức thuyết trình, báo cáo tiểu luận hoặc báo cáo đồ án thời lượng thi được tính theo công thứ
+    -> doc-level hit: True | key facts: 1/1 | points: 1/2
+    agent: [extractive] e) Đối với thi vấn đáp, thời lượng thi được tính theo công thức: Thời lượng thi = [(số người học x 15 phút)/số lượng GV hỏi thi độc lập] + 10 phút. Trong đó, thời gian hỏi đáp cho mỗi người học dự thi tối thiểu là 5 phút và tối đa là 15 phút. Mỗi người học dự thi có thời gian chuẩn bị t
+
+--- Q3: Đến phòng thi muộn bao lâu thì không được dự thi?
+    gold=nguoi-hoc-du-thi  must_contain=['đến muộn quá 15 phút sau khi đã phát đề thi']  filter=None
+    1. score=0.785  id=nguoi-hoc-du-thi#2  | 2. Phải mang theo thẻ sinh viên, thẻ học viên hoặc giấy tờ tùy thân có thông tin cá nhân, dán ảnh và đóng dấu 
+    2. score=0.715  id=phuc-khao-nguoi-hoc#1  | 1. Sau khi điểm số được công bố trên hệ thống của Nhà trường, người học dự thi làm đơn phúc khảo điểm thi (Mẫu
+    3. score=0.673  id=hinh-thuc-thoi-luong-thi#7  | e) Đối với thi vấn đáp, thời lượng thi được tính theo công thức: Thời lượng thi = [(số người học x 15 phút)/số
+    -> doc-level hit: True | key facts: 1/1 | points: 2/2
+    agent: [extractive] 2. Phải mang theo thẻ sinh viên, thẻ học viên hoặc giấy tờ tùy thân có thông tin cá nhân, dán ảnh và đóng dấu giáp lai, phải có mặt tại phòng thi trước giờ thi ít nhất là 15 phút để làm thủ tục dự thi. Trường hợp người học dự thi đến muộn quá 15 phút sau khi đã phát đề thi sẽ không được
+
+--- Q4: Hai giảng viên chấm tiểu luận lệch nhau từ 2 điểm trở lên thì xử lý thế nào?
+    gold=cham-thi  must_contain=['thảo luận để thống nhất kết quả', 'báo CNBM xem xét quyết định']  filter=None
+    1. score=0.648  id=xu-ly-vi-pham-nguoi-hoc#8  | e) Xử lý người học đạo văn đối với tiểu luận, đồ án và các bài tập lớn thuộc điểm học phần: Trong trường hợp p
+    2. score=0.615  id=bien-soan-de-thi#7  | d) Giảng viên không được tự ra đề thi, tổ chức thi và chấm thi đối với những đề thi trắc nghiệm.  2. Biên soạn
+    3. score=0.613  id=cham-thi#2  | b) Cho hai cán bộ chấm thi thống nhất điểm: Trong trường hợp hai cán bộ chấm thi thống nhất được điểm, sẽ sử d
+    -> doc-level hit: True | key facts: 0/2 | points: 0/2
+    agent: [extractive] e) Xử lý người học đạo văn đối với tiểu luận, đồ án và các bài tập lớn thuộc điểm học phần: Trong trường hợp phát hiện người học sao chép hoặc trùng lặp nội dung trong bài làm, nếu là lần vi phạm đầu tiên, người học sẽ phải viết lại hoặc chỉnh sửa lại bài báo cáo, bài nộp, hoặc phần trì
+
+--- Q5: Những lỗi vi phạm nào khiến người học bị đình chỉ thi?
+    gold=xu-ly-vi-pham-nguoi-hoc  must_contain=['mang theo tài liệu hoặc phương tiện bị cấm', 'đưa đề thi ra ngoài khu vực thi', 'không chấp hành các yêu cầu của CBCT']  filter=None
+    1. score=0.795  id=xu-ly-vi-pham-nguoi-hoc#4  | c) Đình chỉ thi: Hình thức đình chỉ thi được áp dụng đối với người học dự thi vi phạm một trong các lỗi sau: m
+    2. score=0.781  id=xu-ly-vi-pham-nguoi-hoc#2  | b) Cảnh cáo: Đối với người học dự thi vi phạm một trong các lỗi sau: đã từng bị xử lý kỷ luật bằng hình thức k
+    3. score=0.763  id=xu-ly-vi-pham-can-bo#4  | b) Cảnh cáo: Hình thức cảnh cáo được áp dụng đối với các cá nhân vi phạm một trong các lỗi sau: trong một học 
+    -> doc-level hit: True | key facts: 2/3 | points: 1/2
+    agent: [extractive] c) Đình chỉ thi: Hình thức đình chỉ thi được áp dụng đối với người học dự thi vi phạm một trong các lỗi sau: mang theo tài liệu hoặc phương tiện bị cấm vào phòng thi theo quy định tại khoản 3, Điều 13 của Quy chế; đưa đề thi ra ngoài khu vực thi hoặc nhận bài giải từ bên ngoài đưa vào p
+
+=== Summary ===
+doc-level hits (naive) : 5/5
+all key facts found    : 3/5
+retrieval points       : 6/10

@@ -1,0 +1,56 @@
+=== Benchmark config ===
+data_dir   : data/khao-thi-phuc-khao  (10 files)
+chunker    : FixedSizeChunker {'chunk_size': 500, 'overlap': 100}
+embedder   : sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+llm        : extractive (no LLM_PROVIDER/LLM_MODEL set)
+chunks     : 107  (avg 482 chars, min 117, max 500)
+
+--- Q1: Tôi muốn phúc khảo bài thi tự luận thì phải làm gì và trong thời hạn bao lâu?
+    gold=phuc-khao-nguoi-hoc  must_contain=['làm đơn phúc khảo', 'giáo vụ Khoa/Viện', 'trong vòng 14 ngày làm việc']  filter={'audience': 'student'}
+    1. score=0.608  id=phuc-khao-nguoi-hoc#2  | 14 ngày làm việc, phải có sự đồng ý Trưởng đơn vị chủ quản học phần thi mới được xem xét, giải quyết.  2. Đối 
+    2. score=0.600  id=phuc-khao-nguoi-hoc#3  | m phúc khảo theo đúng quy trình phúc khảo và trả kết quả phúc khảo cho người nộp hồ sơ phúc khảo trong vòng 2 
+    3. score=0.552  id=nguoi-hoc-du-thi#2  | iáp lai, phải có mặt tại phòng thi trước giờ thi ít nhất là 15 phút để làm thủ tục dự thi. Trường hợp người họ
+    -> doc-level hit: True | key facts: 0/3 | points: 0/2
+    [A/B] same query WITHOUT metadata_filter:
+    1. score=0.673  id=hinh-thuc-thoi-luong-thi#7  | là 5 phút và tối đa là 15 phút. Mỗi người học dự thi có thời gian chuẩn bị tối thiểu từ 3 phút và tối đa là 10
+    2. score=0.643  id=bien-soan-de-thi#14  | s chấm cần đáp ứng chuẩn đầu ra của học phần theo đề cương chi tiết học phần, nội dung các đề tài phải liên qu
+    3. score=0.632  id=phuc-khao-giang-vien#2  | học phần) nhân viên Phòng KT&ĐBCL có trách nhiệm hỗ trợ tìm số phách cho bài thi cần được phúc khảo. Việc chấm
+    -> points without filter: 0/2
+    agent: [extractive] 14 ngày làm việc, phải có sự đồng ý Trưởng đơn vị chủ quản học phần thi mới được xem xét, giải quyết.  2. Đối với môn thi tự luận  c) Đơn vị chủ quản học phần có trách nhiệm thông báo kết quả phúc khảo tới người học dự thi trong vòng 07 ngày làm việc, kể từ ngày nhận được đơn phúc khảo.
+
+--- Q2: Thời lượng tối đa của một bài thi tự luận là bao nhiêu phút?
+    gold=hinh-thuc-thoi-luong-thi  must_contain=['tối đa là 120 phút']  filter=None
+    1. score=0.907  id=hinh-thuc-thoi-luong-thi#6  |   d) Đối với hình thức thi tự luận, thời lượng tối thiểu cho mỗi bài thi là 50 phút và tối đa là 120 phút tùy 
+    2. score=0.888  id=hinh-thuc-thoi-luong-thi#5  | lượng cho các bài kiểm tra thường kỳ của lớp mình.  b) Đối với hình thức thi trắc nghiệm, thời lượng tối thiểu
+    3. score=0.866  id=hinh-thuc-thoi-luong-thi#7  | là 5 phút và tối đa là 15 phút. Mỗi người học dự thi có thời gian chuẩn bị tối thiểu từ 3 phút và tối đa là 10
+    -> doc-level hit: True | key facts: 1/1 | points: 2/2
+    agent: [extractive] d) Đối với hình thức thi tự luận, thời lượng tối thiểu cho mỗi bài thi là 50 phút và tối đa là 120 phút tùy thuộc vào số lượng tín chỉ của mỗi học phần và số lượng câu hỏi trong đề thi.  e) Đối với thi vấn đáp, thời lượng thi được tính theo công thức: Thời lượng thi = [(số người học x 1
+
+--- Q3: Đến phòng thi muộn bao lâu thì không được dự thi?
+    gold=nguoi-hoc-du-thi  must_contain=['đến muộn quá 15 phút sau khi đã phát đề thi']  filter=None
+    1. score=0.799  id=nguoi-hoc-du-thi#2  | iáp lai, phải có mặt tại phòng thi trước giờ thi ít nhất là 15 phút để làm thủ tục dự thi. Trường hợp người họ
+    2. score=0.727  id=nguoi-hoc-du-thi#1  | n hồi ngay cho giáo vụ đơn vị chủ quản/giảng viên giảng dạy nếu có bất cập về lịch thi hoặc sai sót về việc cấ
+    3. score=0.678  id=phuc-khao-nguoi-hoc#1  |  Phòng KT&ĐBCL – Phòng Khảo thí và Đảm bảo chất lượng.  ## Điều 26. Phúc khảo  1. Sau khi điểm số được công bố
+    -> doc-level hit: True | key facts: 1/1 | points: 2/2
+    agent: [extractive] iáp lai, phải có mặt tại phòng thi trước giờ thi ít nhất là 15 phút để làm thủ tục dự thi. Trường hợp người học dự thi đến muộn quá 15 phút sau khi đã phát đề thi sẽ không được dự thi.  3. Đối với các đề thi đóng, người học dự thi chỉ được mang vào phòng thi bút viết, bút chì, compa, tẩ
+
+--- Q4: Hai giảng viên chấm tiểu luận lệch nhau từ 2 điểm trở lên thì xử lý thế nào?
+    gold=cham-thi  must_contain=['thảo luận để thống nhất kết quả', 'báo CNBM xem xét quyết định']  filter=None
+    1. score=0.636  id=nguoi-hoc-du-thi#6  | ; sử dụng hai loại mực; d) Các bài làm giống nhau; e) Viết hoặc vẽ những nội dung không liên quan đến bài thi,
+    2. score=0.636  id=cham-thi#2  | ; Cán bộ chấm thi thứ hai chấm trực tiếp vào bài thi bằng bút đỏ (chấm theo điểm thành phần như đáp án quy địn
+    3. score=0.622  id=loai-hinh-thi-truc-tuyen#6  | nhiên kết quả phúc khảo cho thấy việc chấm bài của các giảng viên là hoàn toàn chính xác. Vấn đề là ở cách trì
+    -> doc-level hit: True | key facts: 0/2 | points: 0/2
+    agent: [extractive] ; sử dụng hai loại mực; d) Các bài làm giống nhau; e) Viết hoặc vẽ những nội dung không liên quan đến bài thi, bài thi bị nhàu nát; f) Bài thi không ghi tên người học dự thi và mã số sinh viên/học viên.  6. Khi hết giờ thi, người học dự thi phải ngừng làm bài, để bút xuống bàn và nộp bà
+
+--- Q5: Những lỗi vi phạm nào khiến người học bị đình chỉ thi?
+    gold=xu-ly-vi-pham-nguoi-hoc  must_contain=['mang theo tài liệu hoặc phương tiện bị cấm', 'đưa đề thi ra ngoài khu vực thi', 'không chấp hành các yêu cầu của CBCT']  filter=None
+    1. score=0.770  id=xu-ly-vi-pham-nguoi-hoc#1  | ) Khiển trách: Áp dụng đối với người học dự thi vi phạm một trong các lỗi như: nhìn bài của người khác, trao đ
+    2. score=0.765  id=xu-ly-vi-pham-can-bo#3  | vi phạm quy chế thi đã được cán bộ giám sát phát hiện và lập biên bản.  b) Cảnh cáo: Hình thức cảnh cáo được á
+    3. score=0.763  id=xu-ly-vi-pham-nguoi-hoc#3  | au. Tuy nhiên, nếu người bị xử lý có đủ bằng chứng để chứng minh mình là người bị quay cóp, CBCT hoặc cán bộ c
+    -> doc-level hit: True | key facts: 1/3 | points: 1/2
+    agent: [extractive] ) Khiển trách: Áp dụng đối với người học dự thi vi phạm một trong các lỗi như: nhìn bài của người khác, trao đổi bài trong quá trình thi, hoặc tiếp tục làm bài sau khi đã hết thời gian làm bài, người học dự thi sẽ bị xử lý kỷ luật ở mức khiển trách. Hình thức xử lý này đồng nghĩa với vi
+
+=== Summary ===
+doc-level hits (naive) : 5/5
+all key facts found    : 2/5
+retrieval points       : 5/10

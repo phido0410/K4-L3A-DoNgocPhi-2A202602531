@@ -1,0 +1,56 @@
+=== Benchmark config ===
+data_dir   : data/khao-thi-phuc-khao  (10 files)
+chunker    : HeadingChunker {'chunk_size': 500, 'drop_notes': False}
+embedder   : sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+llm        : extractive (no LLM_PROVIDER/LLM_MODEL set)
+chunks     : 124  (avg 371 chars, min 59, max 928)
+
+--- Q1: Tôi muốn phúc khảo bài thi tự luận thì phải làm gì và trong thời hạn bao lâu?
+    gold=phuc-khao-nguoi-hoc  must_contain=['làm đơn phúc khảo', 'giáo vụ Khoa/Viện', 'trong vòng 14 ngày làm việc']  filter={'audience': 'student'}
+    1. score=0.528  id=phuc-khao-nguoi-hoc#1  | ## Điều 26. Phúc khảo c) Đơn vị chủ quản học phần có trách nhiệm thông báo kết quả phúc khảo tới người học dự 
+    2. score=0.527  id=nguoi-hoc-du-thi#1  | ## Điều 13. Trách nhiệm của người học khi dự thi 2. Phải mang theo thẻ sinh viên, thẻ học viên hoặc giấy tờ tù
+    3. score=0.498  id=nguoi-hoc-du-thi#6  | ## Điều 13. Trách nhiệm của người học khi dự thi 5. Bài thi phải được viết rõ ràng, sạch sẽ. Những bài thi sau
+    -> doc-level hit: True | key facts: 0/3 | points: 0/2
+    [A/B] same query WITHOUT metadata_filter:
+    1. score=0.624  id=bien-soan-de-thi#18  | ## Điều 8. Biên soạn đề thi b) Các quy định về việc làm tiểu luận, đồ án như: thời gian, các yêu cầu về định d
+    2. score=0.610  id=hinh-thuc-thoi-luong-thi#6  | ## Điều 6. Quy định về hình thức, thời lượng kiểm tra, đánh giá và thi b) Đối với hình thức thi trắc nghiệm, t
+    3. score=0.605  id=hinh-thuc-thoi-luong-thi#7  | ## Điều 6. Quy định về hình thức, thời lượng kiểm tra, đánh giá và thi d) Đối với hình thức thi tự luận, thời 
+    -> points without filter: 0/2
+    agent: [extractive] ## Điều 26. Phúc khảo c) Đơn vị chủ quản học phần có trách nhiệm thông báo kết quả phúc khảo tới người học dự thi trong vòng 07 ngày làm việc, kể từ ngày nhận được đơn phúc khảo.  3. Đối với môn thi trắc nghiệm: Phòng KT&ĐBCL phân công chuyên viên chấm phúc khảo. Phòng KT&ĐBCL tiến hành
+
+--- Q2: Thời lượng tối đa của một bài thi tự luận là bao nhiêu phút?
+    gold=hinh-thuc-thoi-luong-thi  must_contain=['tối đa là 120 phút']  filter=None
+    1. score=0.866  id=hinh-thuc-thoi-luong-thi#6  | ## Điều 6. Quy định về hình thức, thời lượng kiểm tra, đánh giá và thi b) Đối với hình thức thi trắc nghiệm, t
+    2. score=0.857  id=hinh-thuc-thoi-luong-thi#7  | ## Điều 6. Quy định về hình thức, thời lượng kiểm tra, đánh giá và thi d) Đối với hình thức thi tự luận, thời 
+    3. score=0.853  id=hinh-thuc-thoi-luong-thi#8  | ## Điều 6. Quy định về hình thức, thời lượng kiểm tra, đánh giá và thi e) Đối với thi vấn đáp, thời lượng thi 
+    -> doc-level hit: True | key facts: 1/1 | points: 1/2
+    agent: [extractive] ## Điều 6. Quy định về hình thức, thời lượng kiểm tra, đánh giá và thi b) Đối với hình thức thi trắc nghiệm, thời lượng tối thiểu cho mỗi bài thi là 50 phút và tối đa là 75 phút tùy thuộc vào số lượng tín chỉ của mỗi học phần và số lượng câu hỏi trong đề thi (mức độ đề thi mức dễ, trung
+
+--- Q3: Đến phòng thi muộn bao lâu thì không được dự thi?
+    gold=nguoi-hoc-du-thi  must_contain=['đến muộn quá 15 phút sau khi đã phát đề thi']  filter=None
+    1. score=0.708  id=nguoi-hoc-du-thi#1  | ## Điều 13. Trách nhiệm của người học khi dự thi 2. Phải mang theo thẻ sinh viên, thẻ học viên hoặc giấy tờ tù
+    2. score=0.656  id=hinh-thuc-thoi-luong-thi#8  | ## Điều 6. Quy định về hình thức, thời lượng kiểm tra, đánh giá và thi e) Đối với thi vấn đáp, thời lượng thi 
+    3. score=0.641  id=hinh-thuc-thoi-luong-thi#6  | ## Điều 6. Quy định về hình thức, thời lượng kiểm tra, đánh giá và thi b) Đối với hình thức thi trắc nghiệm, t
+    -> doc-level hit: True | key facts: 1/1 | points: 2/2
+    agent: [extractive] ## Điều 13. Trách nhiệm của người học khi dự thi 2. Phải mang theo thẻ sinh viên, thẻ học viên hoặc giấy tờ tùy thân có thông tin cá nhân, dán ảnh và đóng dấu giáp lai, phải có mặt tại phòng thi trước giờ thi ít nhất là 15 phút để làm thủ tục dự thi. Trường hợp người học dự thi đến muộn
+
+--- Q4: Hai giảng viên chấm tiểu luận lệch nhau từ 2 điểm trở lên thì xử lý thế nào?
+    gold=cham-thi  must_contain=['thảo luận để thống nhất kết quả', 'báo CNBM xem xét quyết định']  filter=None
+    1. score=0.614  id=cham-thi#1  | ## Điều 21. Chấm thi bài thi tự luận b) Cho hai cán bộ chấm thi thống nhất điểm: Trong trường hợp hai cán bộ c
+    2. score=0.605  id=loai-hinh-thi-truc-tuyen#8  | ## 2. Thi vấn đáp Đối với các sinh viên khi làm bài thi có những băng khoăn như không biết giảng viên chấm có 
+    3. score=0.560  id=cham-thi#12  | ## Điều 24. Chấm thi tiểu luận, đồ án 3. Nếu kết quả chấm thi giữa 02 GV chênh lệch dưới 02 điểm thì điểm của 
+    -> doc-level hit: True | key facts: 2/2 | points: 1/2
+    agent: [extractive] ## Điều 21. Chấm thi bài thi tự luận b) Cho hai cán bộ chấm thi thống nhất điểm: Trong trường hợp hai cán bộ chấm thi thống nhất được điểm, sẽ sử dụng bút đỏ để ghi điểm đã thống nhất vào ô cho điểm trên bài thi và ký vào phần dành cho cán bộ chấm thi bằng bút đỏ. Nếu hai cán bộ không t
+
+--- Q5: Những lỗi vi phạm nào khiến người học bị đình chỉ thi?
+    gold=xu-ly-vi-pham-nguoi-hoc  must_contain=['mang theo tài liệu hoặc phương tiện bị cấm', 'đưa đề thi ra ngoài khu vực thi', 'không chấp hành các yêu cầu của CBCT']  filter=None
+    1. score=0.757  id=xu-ly-vi-pham-nguoi-hoc#3  | ## Điều 29. Hình thức, thủ tục xử lý người học vi phạm quy chế thi c) Đình chỉ thi: Hình thức đình chỉ thi đượ
+    2. score=0.739  id=xu-ly-vi-pham-nguoi-hoc#1  | ## Điều 29. Hình thức, thủ tục xử lý người học vi phạm quy chế thi b) Cảnh cáo: Đối với người học dự thi vi ph
+    3. score=0.736  id=xu-ly-vi-pham-can-bo#4  | ## Điều 30. Xử lý vi phạm quy chế tổ chức thi, chấm thi b) Cảnh cáo: Hình thức cảnh cáo được áp dụng đối với c
+    -> doc-level hit: True | key facts: 2/3 | points: 1/2
+    agent: [extractive] ## Điều 29. Hình thức, thủ tục xử lý người học vi phạm quy chế thi c) Đình chỉ thi: Hình thức đình chỉ thi được áp dụng đối với người học dự thi vi phạm một trong các lỗi sau: mang theo tài liệu hoặc phương tiện bị cấm vào phòng thi theo quy định tại khoản 3, Điều 13 của Quy chế; đưa đề
+
+=== Summary ===
+doc-level hits (naive) : 5/5
+all key facts found    : 3/5
+retrieval points       : 5/10
