@@ -1,6 +1,6 @@
 # Báo Cáo Nhóm — Lab 7: Embedding & Vector Store
 
-**Nhóm:** 4ae
+**Nhóm:** G43
 **Thành viên:** Nguyễn Trường Bảo (2A202602540), Phạm Cường Quốc (2A202602469), Đỗ Đức Đại (2A202602725), Đỗ Ngọc Phi (2A202602531)
 **Ngày:** 19/09/2026
 
