@@ -180,11 +180,11 @@ Chạy **5 câu hỏi đánh giá của nhóm** trên mã nguồn cá nhân củ
 
 ## Tự Đánh Giá (Phần Cá Nhân)
 
-| Tiêu chí | Điểm tự đánh giá |
-|----------|-------------------|
-| Khởi động (Warm-up) | / 5 |
-| Hướng tiếp cận của tôi (My Approach) | / 10 |
-| Hoàn thiện code (Core Implementation — tests) | / 30 |
-| Dự đoán độ tương tự (Similarity Predictions) | / 5 |
-| Kết quả truy xuất của tôi (Competition Results) | / 10 |
-| **Tổng phần cá nhân** | **/ 60** |
+| Tiêu chí | Điểm tự đánh giá | Căn cứ |
+|----------|-------------------|--------|
+| Khởi động (Warm-up) | 5 / 5 | Tính đúng 23 và 25 chunk, đã kiểm lại bằng `FixedSizeChunker`. Cặp câu "cao" khác từ vựng nhưng cùng nghĩa |
+| Hướng tiếp cận của tôi (My Approach) | 10 / 10 | Giải thích từng hàm, 3 base case của `RecursiveChunker` và lý do lọc trước khi search. Nêu rõ edge case chưa xử lý (chữ viết tắt, "Điều N.") |
+| Hoàn thiện code (Core Implementation — tests) | 30 / 30 | `pytest tests/ -v`: 42/42 passed, không còn `NotImplementedError`, `main.py` chạy trọn |
+| Dự đoán độ tương tự (Similarity Predictions) | 5 / 5 | Đúng 5/5 dự đoán, có đối chứng với mock. Phân tích cặp 3 (0.924) để giải thích vì sao cần filter `audience` |
+| Kết quả truy xuất của tôi (Competition Results) | 9 / 10 | Chạy đúng 5 câu của nhóm, chấm theo ý chính được 6/10 và nêu rõ lỗi Q4. Trừ 1 điểm vì agent chỉ trả chunk top-1, chưa dùng LLM thật nên chưa kiểm được chất lượng câu trả lời |
+| **Tổng phần cá nhân** | **59 / 60** | |
